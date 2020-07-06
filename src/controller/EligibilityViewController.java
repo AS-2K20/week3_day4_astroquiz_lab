@@ -1,5 +1,7 @@
 package controller;
 
+import utility.EligibilityCheck;
+
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,19 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.User;
-import utility.BasicEligibility;
-import utility.EligibiltyCheck;
+//import utility.BasicEligibility;
 
 @WebServlet(urlPatterns= {"/eligible"})
 public class EligibilityViewController extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
-      
-    public EligibilityViewController() {
-        super();
-       
-    }
-
-
+ 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		RequestDispatcher rd=this.getServletContext().getRequestDispatcher("/WEB-INF/views/index.jsp");
@@ -45,6 +41,9 @@ public class EligibilityViewController extends HttpServlet {
 		user.setAge(age);
 		user.setHeight(height);
 		user.setWeight(weight);
+		
+		EligibilityCheck ec = new EligibilityCheck();
+		boolean spaceEligible = ec.basicEligibilityCheck(user);
 		
 		System.out.println(spaceEligible);
 			if(spaceEligible)
